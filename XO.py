@@ -28,8 +28,8 @@ def XObot():
     #            '/lc': 'x', '/cc': 'x', '/rc': 'o',
     #            '/lb': ' ', '/cb': 'o', '/rb': 'o'}
 
-    #/start /help
-    if bot_text[0] in ['/start', '/help']:
+    #/start
+    if bot_text[0] == '/start':
         InlineKeyboardMarkup = return_button('play')
         text = "Let's play tic-tac-toe!"
         post_request('sendMessage', {'chat_id': chat_id, 'text': text, 'reply_markup': InlineKeyboardMarkup})
@@ -94,9 +94,14 @@ def XObot():
                 score_user = r.hget(chat_id, 'score_user')
                 score_bot = r.hget(chat_id, 'score_bot')
                 post_request('sendMessage', {'chat_id': chat_id, 'text': 'Score %s:%s' % (score_bot, score_user), 'reply_markup': InlineKeyboardMarkup})
+    #/score
+    elif bot_text[0] == '/score':
+        score_user = r.hget(chat_id, 'score_user')
+        score_bot = r.hget(chat_id, 'score_bot')
+        post_request('sendMessage', {'chat_id': chat_id, 'text': 'Score %s:%s' % (score_bot, score_user)})
     else:
-        text = bot_text[0]
-        post_request('sendMessage', {'chat_id': chat_id, 'text': text})
+        text = 'Use */play* to playing new game\n  or */score* to get score'
+        post_request('sendMessage', {'chat_id': chat_id, 'text': text, 'parse_mode': 'Markdown'})
     answer_callback_query(data)
     return ''
 
