@@ -35,9 +35,20 @@ def bot_move(field, xo):
         return index
     # Строка со всеми пустыми элементами
     if 3 in count_:
+        # Если вообще все пустые
+        if count_.count(3) == len(count_):
+            row_index = random.choice([0,1,2])
+        else:
+            row_index = count_.index(3)
         elem_index = random.choice([0,1,2])
-        index = return_index(count_.index(3), elem_index)
+        index = return_index(row_index, elem_index)
         return index
+    # Последняя пустая клетка
+    if count_.count(0) != len(count_):
+        row_index = count_.index(1)
+        elem_index = check_elem(field, row_index, ' ')
+        index = return_index(row_index, elem_index)
+        return [index, 'Draw']
     return 'Draw'
 
 def countRow(m, i, xo):

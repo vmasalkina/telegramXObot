@@ -100,7 +100,7 @@ def XObot():
         score_bot = r.hget(chat_id, 'score_bot')
         post_request('sendMessage', {'chat_id': chat_id, 'text': 'Score %s:%s' % (score_bot, score_user)})
     else:
-        text = 'Use */play* to playing new game\n  or */score* to get score'
+        text = 'Use */play* to playing new game\n  or */score* to display score'
         post_request('sendMessage', {'chat_id': chat_id, 'text': text, 'parse_mode': 'Markdown'})
     answer_callback_query(data)
     return ''
